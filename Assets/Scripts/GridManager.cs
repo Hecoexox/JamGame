@@ -13,16 +13,21 @@ public class GridManager : MonoBehaviour
     public float xOffset = 0.75f; // Horizontal offset between cells
     public float yOffset = 0.75f; // Vertical offset for odd rows
 
-    public int displayValue = 5; // Public integer to be displayed on TextMeshPro objects
+    public int displayValue = 0; // Public integer to be displayed on TextMeshPro objects
+
+    public AudioClip tilePlacementSound; // Assign your AudioClip in the Unity Editor
 
     private List<GameObject> textObjects = new List<GameObject>();
 
+    private AudioSource audioSource;
+
     void Start()
     {
-        GenerateGrid();
+        audioSource = GetComponent<AudioSource>();
+        StartCoroutine(GenerateGridCoroutine());
     }
 
-    void GenerateGrid()
+    IEnumerator GenerateGridCoroutine()
     {
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -48,6 +53,10 @@ public class GridManager : MonoBehaviour
                 // Rotate the grid cell by 30 degrees around the y-axis
                 gridCell.transform.Rotate(0, 30f, 0);
 
+                if (tilePlacementSound != null)
+                {
+                    audioSource.PlayOneShot(tilePlacementSound);
+                }
                 // Instantiate TMP object for displaying text on top of the tile
                 GameObject textObject = Instantiate(textMeshProPrefab, gridCell.transform.position, Quaternion.identity);
                 textObject.transform.SetParent(gridCell.transform, false); // Use SetParent method with worldPositionStays argument set to false
@@ -55,6 +64,8 @@ public class GridManager : MonoBehaviour
                 TextMeshPro textMeshPro = textObject.GetComponent<TextMeshPro>();
                 textMeshPro.text = displayValue.ToString(); // Display integer value
                 textObjects.Add(textObject);
+
+                yield return new WaitForSeconds(0.05f); // Wait for 0.1 seconds before creating the next grid cell
             }
         }
 

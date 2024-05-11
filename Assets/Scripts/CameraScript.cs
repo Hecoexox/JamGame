@@ -10,13 +10,13 @@ public class CameraScript : MonoBehaviour
     public float scrollSpeed = 5f;
     public float rotationSpeed = 5f;
     public float movementSpeed = 5f;
-    public float zoomDistance=20f;
+    public float zoomDistance = 20f;
 
     public float minimumHeight = 2f;
     public float maximumHeight = 10f;
 
-    public TileHover tilehover; 
-    
+    public TileHover tilehover;
+
     private void Start()
     {
         centerPoint = new GameObject("CenterPoint").transform;
@@ -28,7 +28,7 @@ public class CameraScript : MonoBehaviour
         if (centerPoint == null)
             return;
 
-        // W, A, S, D tu�lar�yla centerPoint'in konumunu de�i�tirme
+        // W, A, S, D tuşlarıyla centerPoint'in konumunu değiştirme
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -39,12 +39,12 @@ public class CameraScript : MonoBehaviour
 
         centerPoint.Translate(movementDirection * movementSpeed * Time.deltaTime, Space.World);
 
-        
 
-        // Kameran�n centerPoint'i takip etmesi
+
+        // Kameranın centerPoint'i takip etmesi
         transform.position = centerPoint.position;
 
-        // Q veya E tu�lar�na bas�ld���nda kameray� d�nd�rme
+        // Q veya E tuşlarına basıldığında kamerayı döndürme
         if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
         {
             float direction = Input.GetKey(KeyCode.Q) ? 1f : -1f;
@@ -52,7 +52,7 @@ public class CameraScript : MonoBehaviour
             transform.RotateAround(centerPoint.position, Vector3.up, rotationAmount);
         }
 
-        // Fare tekerle�iyle zoom yapma
+        // Fare tekerleğiyle zoom yapma
         float scrollmove = Input.GetAxis("Mouse ScrollWheel");
         float movementAmount = scrollmove * scrollSpeed * Time.deltaTime;
         //centerPoint.Translate(Vector3.up * movementAmount);
@@ -79,7 +79,7 @@ public class CameraScript : MonoBehaviour
     }
     public void SetCenterPoint(Vector3 position)
     {
-        // Yeni konumu olu�tur ve y�ksekli�i s�n�rla
+        // Yeni konumu oluştur ve yüksekliği sınırla
         Vector3 newPosition = position + Vector3.up * zoomDistance;
 
         newPosition -= transform.forward * 5f;

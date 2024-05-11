@@ -23,12 +23,12 @@ public class CameraScript : MonoBehaviour
         centerPoint.position = transform.position + transform.forward * 5f;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (centerPoint == null)
             return;
 
-        // W, A, S, D tuþlarýyla centerPoint'in konumunu deðiþtirme
+        // W, A, S, D tuï¿½larï¿½yla centerPoint'in konumunu deï¿½iï¿½tirme
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -41,10 +41,10 @@ public class CameraScript : MonoBehaviour
 
         
 
-        // Kameranýn centerPoint'i takip etmesi
+        // Kameranï¿½n centerPoint'i takip etmesi
         transform.position = centerPoint.position;
 
-        // Q veya E tuþlarýna basýldýðýnda kamerayý döndürme
+        // Q veya E tuï¿½larï¿½na basï¿½ldï¿½ï¿½ï¿½nda kamerayï¿½ dï¿½ndï¿½rme
         if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
         {
             float direction = Input.GetKey(KeyCode.Q) ? 1f : -1f;
@@ -52,7 +52,7 @@ public class CameraScript : MonoBehaviour
             transform.RotateAround(centerPoint.position, Vector3.up, rotationAmount);
         }
 
-        // Fare tekerleðiyle zoom yapma
+        // Fare tekerleï¿½iyle zoom yapma
         float scrollmove = Input.GetAxis("Mouse ScrollWheel");
         float movementAmount = scrollmove * scrollSpeed * Time.deltaTime;
         //centerPoint.Translate(Vector3.up * movementAmount);
@@ -79,7 +79,7 @@ public class CameraScript : MonoBehaviour
     }
     public void SetCenterPoint(Vector3 position)
     {
-        // Yeni konumu oluþtur ve yüksekliði sýnýrla
+        // Yeni konumu oluï¿½tur ve yï¿½ksekliï¿½i sï¿½nï¿½rla
         Vector3 newPosition = position + Vector3.up * zoomDistance;
 
         newPosition -= transform.forward * 5f;

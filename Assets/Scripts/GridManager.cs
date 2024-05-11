@@ -13,7 +13,7 @@ public class GridManager : MonoBehaviour
     public float xOffset = 0.75f; // Horizontal offset between cells
     public float yOffset = 0.75f; // Vertical offset for odd rows
 
-    public int displayValue = 0; // Public integer to be displayed on TextMeshPro objects
+    public int displayValue = 5; // Public integer to be displayed on TextMeshPro objects
 
     private List<GameObject> textObjects = new List<GameObject>();
 
@@ -51,7 +51,7 @@ public class GridManager : MonoBehaviour
                 // Instantiate TMP object for displaying text on top of the tile
                 GameObject textObject = Instantiate(textMeshProPrefab, gridCell.transform.position, Quaternion.identity);
                 textObject.transform.SetParent(gridCell.transform, false); // Use SetParent method with worldPositionStays argument set to false
-                textObject.transform.localPosition = new Vector3(0, 0.5f, 0);
+                textObject.transform.localPosition = new Vector3(0, 5f, 0);
                 TextMeshPro textMeshPro = textObject.GetComponent<TextMeshPro>();
                 textMeshPro.text = displayValue.ToString(); // Display integer value
                 textObjects.Add(textObject);

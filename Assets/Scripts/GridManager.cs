@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GridManager : MonoBehaviour
 {
     public int gridSizeX = 5;
     public int gridSizeY = 5;
     public GameObject gridCellPrefab;
+    public GameObject textMeshProPrefab; // Assign your TextMeshPro prefab in the Unity Editor
     public float cellSize = 1.0f;
     public float xOffset = 0.75f; // Horizontal offset between cells
     public float yOffset = 0.75f; // Vertical offset for odd rows
+
+    public int displayValue = 0; // Public integer to be displayed on TextMeshPro objects
+
+    private List<GameObject> textObjects = new List<GameObject>();
 
     void Start()
     {
@@ -41,10 +47,30 @@ public class GridManager : MonoBehaviour
 
                 // Rotate the grid cell by 30 degrees around the y-axis
                 gridCell.transform.Rotate(0, 30f, 0);
+
+                // Instantiate TMP object for displaying text on top of the tile
+                GameObject textObject = Instantiate(textMeshProPrefab, gridCell.transform.position, Quaternion.identity);
+                textObject.transform.SetParent(gridCell.transform, false); // Use SetParent method with worldPositionStays argument set to false
+                textObject.transform.localPosition = new Vector3(0, 0.5f, 0);
+                TextMeshPro textMeshPro = textObject.GetComponent<TextMeshPro>();
+                textMeshPro.text = displayValue.ToString(); // Display integer value
+                textObjects.Add(textObject);
             }
         }
 
         // Disable the prefab object after generating the grid
         gridCellPrefab.SetActive(false);
+    }
+
+    void Update()
+    {
+        foreach (GameObject textObject in textObjects)
+        {
+            if (Camera.main != null)
+            {
+                textObject.transform.LookAt(Camera.main.transform);
+                textObject.transform.Rotate(0, 180f, 0); // Correct for initial rotation
+            }
+        }
     }
 }

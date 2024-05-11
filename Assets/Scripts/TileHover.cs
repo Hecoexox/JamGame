@@ -8,7 +8,7 @@ public class TileHover : MonoBehaviour
     public float hoverSpeed = 5.0f; // Speed of the hover animation
     public Material hoverMaterial; // Material to apply when hovered over
     public Material clickedMaterial; // Material to apply when clicked
-
+    public CameraScript cameraScript;
     private Vector3 originalPosition;
     private bool isHovering = false;
     public bool isClicked = false;
@@ -46,6 +46,7 @@ public class TileHover : MonoBehaviour
         {
             isClicked = true;
             GetComponent<Renderer>().material = clickedMaterial;
+            cameraScript.SetCenterPoint(transform.position);
         }
     }
 
